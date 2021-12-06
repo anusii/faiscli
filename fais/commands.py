@@ -117,10 +117,13 @@ def enrolments(config, course):
     soup = BeautifulSoup(browser.page_source, features="lxml")
     table = soup.find_all("table", class_="ClassList")[0]
 
+    df = utils.html2table(table)
+    df = df.rename(columns={"Username": "UID", "Name (s)": "Name"})
+    
     if config.human:
         title = soup.find_all("h2")[0].get_text()
         click.echo(f"{title}\n")
-        click.echo(utils.html2table(table))
+        click.echo(df)
     else:
         utils.html2csv(table)
 
@@ -242,7 +245,7 @@ def stats(config, course):
 
 
 @click.command()
-@click.argument("uid")
+@click.argument("uid", callback=utils.validate_uid)
 @click.option("-s", "--session", default="")
 @pass_config
 def student(config, uid, session):
@@ -251,6 +254,17 @@ def student(config, uid, session):
     utils.login_fais()
     browser = config.browser
 
+    # For stdin if uid not supplied
+    #
+    # if sys.stdin.isatty():
+    #     try:
+    #         for uid in sys.stdin:
+    #             ...
+    #     except KeyboardInterrupt:
+    #         pass
+    # else:
+    #     for line in sys.stdin.readlines():
+    #         ...
 
     # Search for given student's UID.
 
@@ -262,7 +276,8 @@ def student(config, uid, session):
     elem.send_keys(uid)
     elem.send_keys(Keys.RETURN)
 
-    # Click the first student's UID
+    # Click the first identified student's UID.
+    # TODO list all students returned from the fais match.
 
     path = "/html/body/table/tbody/tr/td[2]/form/table/tbody/tr[2]/td[1]/a"
     elem = browser.find_elements_by_xpath(path)[0]
@@ -278,23 +293,37 @@ def student(config, uid, session):
     table = tables[4]
     df = pd.read_html(str(table))[0]
 
+    # Filter for the session of interest.
+    
     if session != "":
         df = df[df['Sem/Year'].str.contains(session)]
 
+    # Remove unwanted columns.
+        
     del df["Enrol."]
     del df["Sp"]
 
+    # Extract student information.
+    
+    title = soup.find_all("h2")[0].get_text()
+    name = title.split(" - ")[1]
+    sex = Select(browser.find_element_by_name("Sex"))
+    sex = sex.first_selected_option.get_attribute("value")
+    path = "/html/body/table/tbody/tr/td[2]/form/p[1]/b[2]"
+    degree = browser.find_elements_by_xpath(path)[0]
+    degree = degree.text
+
+    # Generate the required output.
+    
     if config.human:
-        title = soup.find_all("h2")[0].get_text()
-        sex = Select(browser.find_element_by_name("Sex"))
-        sex = sex.first_selected_option.get_attribute("value")
-        path = "/html/body/table/tbody/tr/td[2]/form/p[1]/b[2]"
-        degree = browser.find_elements_by_xpath(path)[0]
-        degree = degree.text
         click.echo(f"{title} - {sex} - {degree}\n")
         click.echo(df.replace(np.nan, ''))
     else:
-        click.echo(df.to_csv().strip())
+        df["UID"] = uid
+        df["Name"] = name
+        df["Sex"] = sex
+        df = df.iloc[:, [7, 8, 9, 0, 1, 2, 3, 4, 5, 6]]
+        click.echo(df.to_csv(index=False).strip())
 
     utils.logout()
 
