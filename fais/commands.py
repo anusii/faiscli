@@ -328,11 +328,17 @@ def student(config, uid, session):
     utils.logout()
 
 
+########################################################################
+# STUDENTS
+
 @click.command()
 @click.argument("pattern", default="")
 @pass_config
 def students(config, pattern):
-    """All current students."""
+    """All current students.
+
+A pattern can be specified as a filter on the UID and Name.
+"""
 
     utils.login_fais()
     browser = config.browser
@@ -350,20 +356,42 @@ def students(config, pattern):
     table = soup.find_all("table")[2]
     df = pd.read_html(str(table))[0]
 
+    df = df.rename(columns={'Student ID': "UID", "Fore/Last name(s)": 'Name'})
+    del df["Initial(s)"]
+
+    # Filter by uid or name
+
     if pattern != "":
-        d1 = df[df['Student ID'].str.contains(pattern)]
-        d2 = df[df['Fore/Last name(s)'].str.contains(pattern)]
+        d1 = df[df['UID'].str.contains(pattern)]
+        d2 = df[df['Name'].str.contains(pattern)]
         df = pd.concat([d1, d2])
+
+    # Extract Name into Fore and Last
+
+    fore = [k.split()[:-1] for k in df['Name']]
+    df['Fore'] = [" ".join(k) for k in fore]
+    df['Last'] = [k.split()[-1] for k in df['Name']]
+
+    del df['Name']
+
+    # Missing data for now:
+
+    df['Sex'] = "NA"
+
+    # Order for output.
+
+    df = df.iloc[:, [0, 2, 3, 4, 1]]
 
     if config.human:
         click.echo(df)
     else:
-        click.echo(df.to_csv().strip())
+        click.echo(df.to_csv(index=False).strip())
 
     utils.logout()
 
-# TODO
 
+########################################################################
+# WATTLE MARKS
 
 @click.command()
 @click.argument("unit")
