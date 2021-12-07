@@ -18,6 +18,7 @@ Usage: fais [OPTIONS] COMMAND [ARGS]...
 
 Options:
   -d, --debug   Display the browser activity.
+  -f, --fake    Return fake data.
   -h, --human   Human readable output.
   --help        Show this message and exit.
 
@@ -31,7 +32,8 @@ Commands:
   wmarks      Wattle assessment for import into FAIS
 ```
 
-Default output is tabular for human consumption.
+Default output is **CSV**. Use `-h` (`--human``) for output in tabular
+form for human consumption.
 
 ## Username/Password
 
@@ -42,15 +44,13 @@ export FAIS_USERNAME u1234567
 export FAIS_PASSWORD mysecret
 ```
 
-Or a private text file `private.json` in the current working directory
-(and be extra careful not to commit it into github - .gitignore will
-ignore it for you):
+Or a private text file `private.json` in the user's `~/.config/fais/`
+directory (and be extra careful not to commit it into github -
+.gitignore will ignore it for you):
 
 ```
 {"username": "u1234567", "password": "mysecret"}
 ```
-
-Plan to move the location of `private.json` to ~/.config/fais/.
 
 ## Examples
 
@@ -205,8 +205,27 @@ $ fais student --special COMP3430 u1234567  # Show any special requests.
 To look up a students UID, you can use the **students** command:
 
 ```console
+$ fais -f students
+UID,Fore,Last,Sex,Degree
+u1234567,Deshayla,Chaniah,NA,MADAN
+u1234568,Adelya,Lilias,NA,InfTech
+u1234569,Myiesha,Quillian,NA,Engineer
+u1234560,Sailee,Darsy,NA,FDD Eng. & Adv. Comp.
+u1234561,Artia,Jaysson,NA,BPPE
+u1234562,Kyniah,Avontae,NA,FDD Eng. & Adv. Comp.
+u1234570,Adabella,Sheryce,NA,Engineer
+u1234571,Ludy,Shalva,NA,CADAN
+u6543432,Xyriah,Barris,NA,
+u4546332,Yangqi,Yu,NA,BIT
+u7543364,,Norden,NA,MADAN
+u4323445,Alexander,Watt,NA,BA/BSc
+```
+
+To identify particular students use a pipeline:
+
+```console
 $ fais students | grep -i tommy
-1045,u1234567,Tommy Jacson,,BAC
-2061,u2345678,Tommy Stalone,,Engineer
-3018,u3456789,Tommy Risenen,,PhB(Hons)/BSc(Hons)
+u1234567,Tommy Jacson,M,BAC
+u2345678,Tommy Stalone,M,Engineer
+u3456789,Tommy Risenen,F,PhB(Hons)/BSc(Hons)
 ```

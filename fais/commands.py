@@ -341,7 +341,7 @@ def students(config, pattern):
 A pattern can be specified as a filter on the UID and Name.
 """
 
-    if config.test:
+    if config.fake:
         df = data.students()
     else:
         utils.login_fais()
@@ -391,7 +391,7 @@ A pattern can be specified as a filter on the UID and Name.
     else:
         click.echo(df.to_csv(index=False).strip())
 
-    if not config.test:
+    if not config.fake:
         utils.logout()
 
 

@@ -44,18 +44,18 @@ sys.argv[0] = utils.APP
 # ----------------------------------------------------------------------
 
 @click.group()
-@click.option("-h", "--human", is_flag=True, default=False,
-              help="Pretty print for human consumption.")
 @click.option("-d", "--debug", is_flag=True, default=False,
               help="Display the browser.")
-@click.option("-t", "--test", is_flag=True, default=False,
-              help="Display the browser.")
+@click.option("-f", "--fake", is_flag=True, default=False,
+              help="Return fake data.")
+@click.option("-h", "--human", is_flag=True, default=False,
+              help="Pretty print for human consumption.")
 @pass_config
-def cli(config, human, debug, test):
+def cli(config, human, debug, fake):
     """Access FAIS functionality from the command line."""
     config.human = human
     config.debug = debug
-    config.test = test
+    config.fake = fake
 
 #    if False:  # command in ['wget']:
 #        utils.login_wattle()
