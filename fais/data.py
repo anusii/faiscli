@@ -2,6 +2,16 @@ import pandas as pd
 import io
 
 
+def student(uid):
+    data = """Course,Description,Sem/Year,Enrol.,Status,Grade,Final,Comment,Sp
+COMP7230,Programming for Data Scientists,Sum/2021,details,,D,74,,Sp
+COMP6240,Relational Databases,S2/2021,details,,CR,62,,Sp
+"""
+    with io.StringIO(data) as f:
+        df = pd.read_csv(f)
+    return(df)
+
+
 def students():
     data = """Student ID,Fore/Last name(s),Initial(s),Degree
 u1234567,Deshayla Chaniah,,MADAN

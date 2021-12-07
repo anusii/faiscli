@@ -245,15 +245,15 @@ def stats(config, course):
     utils.logout()
 
 
+########################################################################
+# STUDENT
+
 @click.command()
 @click.argument("uid", callback=utils.validate_uid)
 @click.option("-s", "--session", default="")
 @pass_config
 def student(config, uid, session):
     """Student details."""
-
-    utils.login_fais()
-    browser = config.browser
 
     # For stdin if uid not supplied
     #
@@ -267,55 +267,65 @@ def student(config, uid, session):
     #     for line in sys.stdin.readlines():
     #         ...
 
-    # Search for given student's UID.
+    if config.fake:
+        df = data.student(uid)
+        name = "Harriet Potter"
+        title = f"Details for student: {uid} - Harriet Potter"
+        sex = "F"
+        degree = "MADAN"
+    else:
+        utils.login_fais()
+        browser = config.browser
 
-    elem = browser.find_element_by_name("in")
-    select = Select(elem)
-    select.select_by_value("anystudent")
+        # Search for given student's UID.
 
-    elem = browser.find_element_by_name("search")
-    elem.send_keys(uid)
-    elem.send_keys(Keys.RETURN)
+        elem = browser.find_element_by_name("in")
+        select = Select(elem)
+        select.select_by_value("anystudent")
 
-    # Click the first identified student's UID.
-    # TODO list all students returned from the fais match.
+        elem = browser.find_element_by_name("search")
+        elem.send_keys(uid)
+        elem.send_keys(Keys.RETURN)
 
-    path = "/html/body/table/tbody/tr/td[2]/form/table/tbody/tr[2]/td[1]/a"
-    elem = browser.find_elements_by_xpath(path)[0]
-    elem.click()
+        # Click the first identified student's UID.
+        # TODO list all students returned from the fais match.
 
-    # List students details.
+        path = "/html/body/table/tbody/tr/td[2]/form/table/tbody/tr[2]/td[1]/a"
+        elem = browser.find_elements_by_xpath(path)[0]
+        elem.click()
 
-    soup = BeautifulSoup(browser.page_source, features="lxml")
-    tables = soup.find_all("table")
-    if len(tables) < 5:
-        utils.info_warning(f"student not found '{uid}'")
-        sys.exit(0)
-    table = tables[4]
-    df = pd.read_html(str(table))[0]
+        # List students details.
+
+        soup = BeautifulSoup(browser.page_source, features="lxml")
+        tables = soup.find_all("table")
+        if len(tables) < 5:
+            utils.info_warning(f"student not found '{uid}'")
+            sys.exit(0)
+        table = tables[4]
+        df = pd.read_html(str(table))[0]
+
+        # Extract student information.
+
+        title = soup.find_all("h2")[0].get_text()
+        name = title.split(" - ")[1]
+        sex = Select(browser.find_element_by_name("Sex"))
+        sex = sex.first_selected_option.get_attribute("value")
+        path = "/html/body/table/tbody/tr/td[2]/form/p[1]/b[2]"
+        degree = browser.find_elements_by_xpath(path)[0]
+        degree = degree.text
 
     # Filter for the session of interest.
-    
+
     if session != "":
         df = df[df['Sem/Year'].str.contains(session)]
 
     # Remove unwanted columns.
-        
+
     del df["Enrol."]
     del df["Sp"]
 
-    # Extract student information.
-    
-    title = soup.find_all("h2")[0].get_text()
-    name = title.split(" - ")[1]
-    sex = Select(browser.find_element_by_name("Sex"))
-    sex = sex.first_selected_option.get_attribute("value")
-    path = "/html/body/table/tbody/tr/td[2]/form/p[1]/b[2]"
-    degree = browser.find_elements_by_xpath(path)[0]
-    degree = degree.text
-
     # Generate the required output.
-    
+
     if config.human:
         click.echo(f"{title} - {sex} - {degree}\n")
         click.echo(df.replace(np.nan, ''))
@@ -326,7 +336,8 @@ def student(config, uid, session):
         df = df.iloc[:, [7, 8, 9, 0, 1, 2, 3, 4, 5, 6]]
         click.echo(df.to_csv(index=False).strip())
 
-    utils.logout()
+    if not config.fake:
+        utils.logout()
 
 
 ########################################################################
