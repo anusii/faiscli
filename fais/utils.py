@@ -54,6 +54,7 @@ class Config(object):
         self.debug = None
         self.human = None
         self.browser = None
+        self.test = None
         self.wait = None
         self.private = os.path.expanduser("~/.config/fais/private.json")
 

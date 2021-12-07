@@ -48,12 +48,14 @@ sys.argv[0] = utils.APP
               help="Pretty print for human consumption.")
 @click.option("-d", "--debug", is_flag=True, default=False,
               help="Display the browser.")
-
+@click.option("-t", "--test", is_flag=True, default=False,
+              help="Display the browser.")
 @pass_config
-def cli(config, human, debug):
+def cli(config, human, debug, test):
     """Access FAIS functionality from the command line."""
     config.human = human
     config.debug = debug
+    config.test = test
 
 #    if False:  # command in ['wget']:
 #        utils.login_wattle()

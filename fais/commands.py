@@ -44,6 +44,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.expected_conditions import presence_of_element_located
 
+import fais.data as data
 import fais.utils as utils
 
 from fais.utils import pass_config
@@ -340,21 +341,24 @@ def students(config, pattern):
 A pattern can be specified as a filter on the UID and Name.
 """
 
-    utils.login_fais()
-    browser = config.browser
+    if config.test:
+        df = data.students()
+    else:
+        utils.login_fais()
+        browser = config.browser
 
-    elem = browser.find_element_by_name("in")
-    select = Select(elem)
-    select.select_by_value("curstudent")
+        elem = browser.find_element_by_name("in")
+        select = Select(elem)
+        select.select_by_value("curstudent")
 
-    elem = browser.find_element_by_name("search")
-    elem.send_keys(Keys.RETURN)
+        elem = browser.find_element_by_name("search")
+        elem.send_keys(Keys.RETURN)
 
-    # List all students.
+        # List all students.
 
-    soup = BeautifulSoup(browser.page_source, features="lxml")
-    table = soup.find_all("table")[2]
-    df = pd.read_html(str(table))[0]
+        soup = BeautifulSoup(browser.page_source, features="lxml")
+        table = soup.find_all("table")[2]
+        df = pd.read_html(str(table))[0]
 
     df = df.rename(columns={'Student ID': "UID", "Fore/Last name(s)": 'Name'})
     del df["Initial(s)"]
@@ -387,7 +391,8 @@ A pattern can be specified as a filter on the UID and Name.
     else:
         click.echo(df.to_csv(index=False).strip())
 
-    utils.logout()
+    if not config.test:
+        utils.logout()
 
 
 ########################################################################
