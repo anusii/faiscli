@@ -273,6 +273,13 @@ def student(config, uid, session):
         title = f"Details for student: {uid} - Harriet Potter"
         sex = "F"
         degree = "MADAN"
+
+        # only fake use: add unitid for each course
+        
+        course = data.courses()
+        temp = df
+
+        df = pd.merge(course, temp, on=['Course', 'Sem/Year'])
     else:
         utils.login_fais()
         browser = config.browser
@@ -325,7 +332,6 @@ def student(config, uid, session):
     del df["Sp"]
 
     # Generate the required output.
-
     if config.human:
         click.echo(f"{title} - {sex} - {degree}\n")
         click.echo(df.replace(np.nan, ''))
@@ -333,7 +339,9 @@ def student(config, uid, session):
         df["UID"] = uid
         df["Name"] = name
         df["Sex"] = sex
-        df = df.iloc[:, [7, 8, 9, 0, 1, 2, 3, 4, 5, 6]]
+        # df = df.iloc[:, [7, 8, 9, 0, 1, 2, 3, 4, 5, 6]]
+        df = df.iloc[:,[9, 10, 11, 0, 1, 2, 3, 5, 6, 7, 8]]
+        df.rename(columns={'Description_x': 'Description'}, inplace=True)
         click.echo(df.to_csv(index=False).strip())
 
     if not config.fake:
