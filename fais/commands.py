@@ -137,23 +137,30 @@ def enrolments(config, course):
 def final(config, course):
     """Students final grades for a course."""
 
-    utils.login_fais()
-    browser = config.browser
+    if config.fake:
+        df = data.final(course)
 
-    url = f"https://cs.anu.edu.au/fais/staff/FinalMarks.php?UnitID={course}"
-    browser.get(url)
+        click.echo(df.to_csv(index=False).strip())
 
-    soup = BeautifulSoup(browser.page_source, features="lxml")
-    table = soup.find_all("table")[3]
-
-    if config.human:
-        title = soup.find_all("h2")[0].get_text()
-        click.echo(f"{title}\n")
-        click.echo(utils.html2table(table))
     else:
-        utils.html2csv(table)
 
-    utils.logout()
+        utils.login_fais()
+        browser = config.browser
+
+        url = f"https://cs.anu.edu.au/fais/staff/FinalMarks.php?UnitID={course}"
+        browser.get(url)
+
+        soup = BeautifulSoup(browser.page_source, features="lxml")
+        table = soup.find_all("table")[3]
+
+        if config.human:
+            title = soup.find_all("h2")[0].get_text()
+            click.echo(f"{title}\n")
+            click.echo(utils.html2table(table))
+        else:
+            utils.html2csv(table)
+
+        utils.logout()
 
 
 @click.command()
@@ -275,7 +282,7 @@ def student(config, uid, session):
         degree = "MADAN"
 
         # only fake use: add unitid for each course
-        
+
         course = data.courses()
         temp = df
 
