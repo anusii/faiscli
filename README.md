@@ -225,7 +225,7 @@ To identify particular students use a pipeline:
 
 ```console
 $ fais students | grep -i tommy
-u1234567,Tommy Jacson,M,BAC
-u2345678,Tommy Stalone,M,Engineer
-u3456789,Tommy Risenen,F,PhB(Hons)/BSc(Hons)
+u1234567,Tommy,Jacson,M,BAC
+u2345678,Tommy,Stalone,M,Engineer
+u3456789,Tommy,Risenen,F,PhB(Hons)/BSc(Hons)
 ```
