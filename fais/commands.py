@@ -58,7 +58,7 @@ def sort_by_course_id(e):
 @click.command()
 @pass_config
 def courses(config):
-    """All courses and codes."""
+    """All courses and unit codes, useful for obtaining a unit code."""
 
     utils.login_fais()
     browser = config.browser
@@ -130,6 +130,9 @@ def enrolments(config, course):
 
     utils.logout()
 
+
+########################################################################
+# FINAL
 
 @click.command()
 @click.argument("course")

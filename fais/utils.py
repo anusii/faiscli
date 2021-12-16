@@ -226,8 +226,11 @@ def logout(config):
 
 
 def validate_uid(ctx, param, value):
+    """Check the University ID and optionally strip email address."""
     if re.match(r'^[uU]\d{7}$', value):
         return value
+    elif re.match(r'^[uU]\d{7}@anu.edu.au$', value):
+        return value.replace("@anu.edu.au", "")
     raise click.BadParameter(f"'{value}'. Should be like 'u1234567'.")
 
 

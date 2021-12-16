@@ -108,8 +108,12 @@ u5632660,4.95,Kieth,Trimmer
 
 **final** grades for each student in a course
 
-List the final FAIS marks and grades for a course. With`--csv` the output
-is in **csv** format which can be post processed by, for example, *mlr*.
+List the final FAIS marks and grades for a course. With `--human` the
+output is in tabular form. By default the output is **CSV** which can
+be post processed by, for example, *mlr*, or other command line tools.
+
+Note that different course will have different collections of
+assessment.
 
 ```
 $ fais final 12886
