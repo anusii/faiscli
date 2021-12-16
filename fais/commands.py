@@ -284,12 +284,13 @@ def student(config, uid, session):
         sex = "F"
         degree = "MADAN"
 
-        # only fake use: add unitid for each course
+        # Add unitid for each course as required for FAIS+
 
         course = data.courses()
-        temp = df
-
-        df = pd.merge(course, temp, on=['Course', 'Sem/Year'])
+        df = pd.merge(df, course, on=['Course', 'Sem/Year'])
+        # Why not add Description to the merge so the following not required?
+        df.rename(columns={'Description_x': 'Description'}, inplace=True)
+        del df['Description_y']
     else:
         utils.login_fais()
         browser = config.browser
@@ -331,6 +332,12 @@ def student(config, uid, session):
         degree = browser.find_elements_by_xpath(path)[0]
         degree = degree.text
 
+        # 20211217 gjw Fake added unitid. TODO Investigate if can
+        # obtain obtain unitid throug scrpaing to add it in - i.e.,
+        # COURSES might need to be loaded by default on startup?
+
+        df['Unitid'] = 12886
+
     # Filter for the session of interest.
 
     if session != "":
@@ -349,9 +356,8 @@ def student(config, uid, session):
         df["UID"] = uid
         df["Name"] = name
         df["Sex"] = sex
-        # df = df.iloc[:, [7, 8, 9, 0, 1, 2, 3, 4, 5, 6]]
-        df = df.iloc[:,[9, 10, 11, 0, 1, 2, 3, 5, 6, 7, 8]]
-        df.rename(columns={'Description_x': 'Description'}, inplace=True)
+
+        df = df.iloc[:, [8, 9, 10, 7, 0, 1, 2, 3, 5, 6]]
         click.echo(df.to_csv(index=False).strip())
 
     if not config.fake:
