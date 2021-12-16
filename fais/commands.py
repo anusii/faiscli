@@ -357,7 +357,7 @@ def student(config, uid, session):
         df["Name"] = name
         df["Sex"] = sex
 
-        df = df.iloc[:, [8, 9, 10, 7, 0, 1, 2, 3, 5, 6]]
+        df = df.iloc[:, [8, 9, 10, 7, 0, 1, 2, 3, 4, 5, 6]]
         click.echo(df.to_csv(index=False).strip())
 
     if not config.fake:
