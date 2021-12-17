@@ -1,12 +1,12 @@
 # FAIS Command Line Tool
 
-The beginnings of a command line tool for FAIS (and Wattle).
+The beginnings of a command line tool for FAIS (and Wattle and SAS).
 
 To install:
 
 ```console
-$ git clone https://github.com/anusii/fais.git
-$ cd fais/cli
+$ git clone https://github.com/anusii/faiscli.git
+$ cd faiscli
 $ make install
 ```
 
@@ -17,23 +17,49 @@ Usage: fais [OPTIONS] COMMAND [ARGS]...
   Access FAIS functionality from the command line.
 
 Options:
-  -d, --debug   Display the browser activity.
-  -f, --fake    Return fake data.
-  -h, --human   Human readable output.
-  --help        Show this message and exit.
+  -d, --debug  Display the browser.
+  -f, --fake   Return fake data.
+  -h, --human  Pretty print for human consumption.
+  --help       Show this message and exit.
 
 Commands:
-  courses     All courses and codes.
+  courses     All courses and unit codes, useful for obtaining a unit code.
   enrolments  Students enrolled in a course.
   final       Students final grades for a course.
   function    Functions for --marks (int) and --grades (str).
+  stats       Stats for final grades for a course.
   student     Student details.
   students    All current students.
-  wmarks      Wattle assessment for import into FAIS
 ```
 
-Default output is **CSV**. Use `-h` (`--human``) for output in tabular
-form for human consumption.
+Default output is **csv**. Use `-h` (`--human``) for output in tabular
+form for human consumption and some graphics too for certain commands
+(e.g., *final*).
+
+Similarly for the **wattle** command line interface:
+
+```console
+$ git clone https://github.com/anusii/wattlecli.git
+$ cd wattlecli
+$ make install
+```
+
+```console
+$ wattle --help
+Usage: wattle [OPTIONS] COMMAND [ARGS]...
+
+  Access WATTLE functionality from the command line.
+
+Options:
+  -d, --debug  Display the browser.
+  -f, --fake   Return fake data.
+  -h, --human  Pretty print for human consumption.
+  --help       Show this message and exit.
+
+Commands:
+  marks  Wattle assessement for import into FAIS.
+
+```
 
 ## Username/Password
 
@@ -98,7 +124,7 @@ into FAIS. The course code here (34101) is Wattle's unit id
 corresponding to COMP3430 Sem 2 2021 and FAIS's 12886.
 
 ```console
-$ fais wmarks 34101 "Quiz 1"
+$ wattle marks 34101 "Quiz 1"
 Uni ID,Quiz: Quiz 1 (covering material from weeks 1 and 2) (Real),First name,Surname
 u1375694,1.75,Fred,Smith
 u3267832,3.45,Joy,Adams
