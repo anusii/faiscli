@@ -321,6 +321,17 @@ def student(config, uid, session):
         elem.send_keys(uid)
         elem.send_keys(Keys.RETURN)
 
+        # Check if no students found.
+
+        if "Sorry - no students match" in browser.page_source:
+            if config.human:
+                utils.info_error(f"no such student `{uid}'")
+                sys.exit(1)
+            else:
+                print("UID,Name,Sex,Unitid,Course,Description," +
+                      "Sem/Year,Status,Grade,Final,Comment")
+                sys.exit(0)
+
         # Click the first identified student's UID.
         # TODO list all students returned from the fais match.
 
