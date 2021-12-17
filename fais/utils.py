@@ -37,15 +37,12 @@ import click
 import getpass
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.expected_conditions import presence_of_element_located
-from selenium.common.exceptions import TimeoutException
 
 import pandas as pd
 
 APP = "fais"
+URL = "https://cs.anu.edu.au/fais/staff/"
 
 
 class Config(object):
@@ -137,7 +134,7 @@ def html2csv(table):
 
 
 @pass_config
-def login_fais(config):
+def login(config):
 
     # Driver/Session
 
@@ -151,7 +148,7 @@ def login_fais(config):
 
     # Login
 
-    browser.get("https://cs.anu.edu.au/fais/staff/StaffDetails.php")
+    browser.get(URL + "StaffDetails.php")
     assert "FAIS Login" in browser.title
 
     elem = browser.find_element_by_name("Username")
@@ -165,54 +162,6 @@ def login_fais(config):
     elem.send_keys(Keys.RETURN)
 
     assert "FAIS Details" in browser.title, "fais: failed to login"
-
-    return(browser)
-
-
-@pass_config
-def login_wattle(config):
-
-    # Driver/Session
-
-    options = webdriver.ChromeOptions()
-    if not config.debug:
-        options.headless = True
-    browser = webdriver.Chrome(options=options)
-    config.browser = browser
-    wait = WebDriverWait(browser, 10)
-    config.wait = wait
-
-    # Login
-
-    browser.get("https://wattlecourses.anu.edu.au/")
-
-    try:
-        wait.until(presence_of_element_located((By.NAME, "j_username")))
-    except TimeoutException:
-        info_error("timed out waiting for Wattle login page")
-        logout()
-        sys.exit(1)
-
-    assert "Australian National University Login Service" in browser.title
-
-    elem = browser.find_element_by_name("j_username")
-    elem.clear()
-    elem.send_keys(get_username())
-
-    elem = browser.find_element_by_name("j_password")
-    elem.clear()
-    elem.send_keys(get_password())
-
-    elem.send_keys(Keys.RETURN)
-
-    try:
-        wait.until(presence_of_element_located((By.ID, "page-my-index")))
-    except TimeoutException:
-        info_error("timed out waiting after login")
-#        logout()
-        sys.exit(1)
-
-    assert "Dashboard" in browser.title, "fais: failed to login to Wattle"
 
     return(browser)
 

@@ -27,7 +27,6 @@
 # Author: Graham.Williams@anu.edu.au
 
 
-import os
 import re
 import sys
 import click
@@ -36,18 +35,22 @@ import numpy as np
 import pandas as pd
 
 from bs4 import BeautifulSoup
-from time import gmtime, strftime
 from plotnine import ggplot, aes, geom_bar
 
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
-from selenium.webdriver.support.expected_conditions import presence_of_element_located
 
 import fais.data as data
 import fais.utils as utils
 
-from fais.utils import pass_config
+from fais.utils import pass_config, URL
+
+# Do not limit dataframe output.
+
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+pd.set_option('display.max_colwidth', None)
 
 
 def sort_by_course_id(e):
@@ -60,7 +63,7 @@ def sort_by_course_id(e):
 def courses(config):
     """All courses and unit codes, useful for obtaining a unit code."""
 
-    utils.login_fais()
+    utils.login()
     browser = config.browser
 
     elem = browser.find_element_by_name("in")
@@ -105,10 +108,10 @@ def courses(config):
 def enrolments(config, course):
     """Students enrolled in a course."""
 
-    utils.login_fais()
+    utils.login()
     browser = config.browser
 
-    url = f"https://cs.anu.edu.au/fais/staff/Enrolments.php?UnitID={course}"
+    url = URL + f"Enrolments.php?UnitID={course}"
     browser.get(url)
     soup = BeautifulSoup(browser.page_source, features="lxml")
 
@@ -152,10 +155,10 @@ def final(config, course):
         click.echo(df.to_csv(index=False).strip())
         sys.exit(0)
 
-    utils.login_fais()
+    utils.login()
     browser = config.browser
 
-    url = f"https://cs.anu.edu.au/fais/staff/FinalMarks.php?UnitID={course}"
+    url = URL + f"FinalMarks.php?UnitID={course}"
     browser.get(url)
     soup = BeautifulSoup(browser.page_source, features="lxml")
 
@@ -187,10 +190,10 @@ def final(config, course):
 def function(config, course, mark, grade):
     """Functions for --marks (int) and --grades (str)."""
 
-    utils.login_fais()
+    utils.login()
     browser = config.browser
 
-    url = f"https://cs.anu.edu.au/fais/staff/FinalMarks.php?Functions={course}"
+    url = URL + f"FinalMarks.php?Functions={course}"
     browser.get(url)
 
     soup = BeautifulSoup(browser.page_source, features="lxml")
@@ -225,10 +228,10 @@ def function(config, course, mark, grade):
 def stats(config, course):
     """Stats for final grades for a course."""
 
-    utils.login_fais()
+    utils.login()
     browser = config.browser
 
-    url = f"https://cs.anu.edu.au/fais/staff/FinalMarks.php?UnitID={course}"
+    url = URL + f"FinalMarks.php?UnitID={course}"
     browser.get(url)
 
     soup = BeautifulSoup(browser.page_source, features="lxml")
@@ -305,7 +308,7 @@ def student(config, uid, session):
         df.rename(columns={'Description_x': 'Description'}, inplace=True)
         del df['Description_y']
     else:
-        utils.login_fais()
+        utils.login()
         browser = config.browser
 
         # Search for given student's UID.
@@ -392,7 +395,7 @@ A pattern can be specified as a filter on the UID and Name.
     if config.fake:
         df = data.students()
     else:
-        utils.login_fais()
+        utils.login()
         browser = config.browser
 
         elem = browser.find_element_by_name("in")
@@ -441,73 +444,3 @@ A pattern can be specified as a filter on the UID and Name.
 
     if not config.fake:
         utils.logout()
-
-
-########################################################################
-# WATTLE MARKS
-
-@click.command()
-@click.argument("unit")
-@click.argument("assessment")
-@pass_config
-def wmarks(config, unit, assessment):
-    """Wattle assessement for import into FAIS.
-
-The aim is to extract the uid,mark from Wattle into a CSV file.
-A fais command will then load that up into an assessment variable.
-
-If no assessment is supplied, print the list of all assessments available.
-
-Example:
-
-    $ fais wmarks 34101 "Quiz 1"
-"""
-
-    utils.login_wattle()
-    browser = config.browser
-    wait = config.wait
-
-    # EXTRACT MARKS
-    #
-    # Exports to COMP3430_Sem2_2021 Grades-20211129_2115-comma-separated.csv
-    # Exports to COMP3430_Sem2_2021 Grades-20211129_2121-comma-separated.csv
-
-    url = "https://wattlecourses.anu.edu.au/grade/export/txt/index.php?id="
-    browser.get(url + unit)
-    now = strftime("%Y%m%d_%H%M", gmtime())
-    elem = browser.find_element_by_name("submitbutton")
-    elem.click()
-
-    # Be sure to wait a little by going home and check when we get there.
-
-    browser.get("https://wattlecourses.anu.edu.au/my/")
-    wait.until(presence_of_element_located((By.ID, "page-my-index")))
-
-    # Hopefully the file is now saved and present. For Chrome headless
-    # the file is saved into the current working directory but in
-    # Downloads when not in headless mode. TOD Need to find the optins
-    # to specify where to save the file by default without asking.
-
-    COURSE = "COMP3430_Sem2_2021"  # TODO FIX THIS
-    fname = f"{COURSE} Grades-{now}-comma_separated.csv"
-    home = os.path.expanduser(f"~")
-    downloads = f"{home}/Downloads/{fname}"
-    if os.path.exists(fname):
-        fpath = os.path.expanduser(fname)
-    elif os.path.exists(downloads):
-        fpath = os.path.expanduser(f"~/Downloads/{fname}")
-    else:
-        utils.info_error("could not find saved CSV file")
-        sys.exit(1)
-
-    df = pd.read_csv(fpath)
-    os.remove(fpath)
-
-    ndf = list(df)
-    cols = [x for x in ndf if assessment in x]
-    cols.insert(0, 'Uni ID')
-    cols.insert(2, 'First name')
-    cols.insert(3, 'Surname')
-    click.echo(df[cols].to_csv(index=False).strip())
-
-    utils.logout()
