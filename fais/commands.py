@@ -149,28 +149,34 @@ def final(config, course):
 
     if config.fake:
         df = data.final(course)
-
         click.echo(df.to_csv(index=False).strip())
+        sys.exit(0)
 
-    else:
+    utils.login_fais()
+    browser = config.browser
 
-        utils.login_fais()
-        browser = config.browser
+    url = f"https://cs.anu.edu.au/fais/staff/FinalMarks.php?UnitID={course}"
+    browser.get(url)
+    soup = BeautifulSoup(browser.page_source, features="lxml")
 
-        url = f"https://cs.anu.edu.au/fais/staff/FinalMarks.php?UnitID={course}"
-        browser.get(url)
-
-        soup = BeautifulSoup(browser.page_source, features="lxml")
-        table = soup.find_all("table")[3]
-
+    if "Sorry - no students found for this course" in browser.page_source:
         if config.human:
-            title = soup.find_all("h2")[0].get_text()
-            click.echo(f"{title}\n")
-            click.echo(utils.html2table(table))
+            utils.info_error(f"no students found in course `{course}'")
         else:
-            utils.html2csv(table)
+            print("Student,Fore/Last Names,Degree," +
+                  "FAIS Mark,FAIS Grade,Seq.,Sp")
+        sys.exit(0)
 
-        utils.logout()
+    table = soup.find_all("table")[3]
+
+    if config.human:
+        title = soup.find_all("h2")[0].get_text()
+        click.echo(f"{title}\n")
+        click.echo(utils.html2table(table))
+    else:
+        utils.html2csv(table)
+
+    utils.logout()
 
 
 @click.command()
