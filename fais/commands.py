@@ -110,19 +110,26 @@ def enrolments(config, course):
 
     url = f"https://cs.anu.edu.au/fais/staff/Enrolments.php?UnitID={course}"
     browser.get(url)
+    soup = BeautifulSoup(browser.page_source, features="lxml")
 
     if "Sorry - no such course found in database" in browser.page_source:
         utils.info_error(f"no such course `{course}'")
         sys.exit(1)
 
-    soup = BeautifulSoup(browser.page_source, features="lxml")
-    table = soup.find_all("table", class_="ClassList")[0]
+    title = soup.find_all("h2")[0].get_text()
 
+    if "Sorry - This course has no students" in browser.page_source:
+        if config.human:
+            click.echo(f"{title}\n")
+        else:
+            print("Username,Name (s),Status,Mark,Grade,Degree,Sp")
+        sys.exit(0)
+
+    table = soup.find_all("table", class_="ClassList")[0]
     df = utils.html2table(table)
     df = df.rename(columns={"Username": "UID", "Name (s)": "Name"})
-    
+
     if config.human:
-        title = soup.find_all("h2")[0].get_text()
         click.echo(f"{title}\n")
         click.echo(df)
     else:
