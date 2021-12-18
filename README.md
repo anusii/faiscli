@@ -125,10 +125,10 @@ corresponding to COMP3430 Sem 2 2021 and FAIS's 12886.
 
 ```console
 $ wattle marks 34101 "Quiz 1"
-Uni ID,Quiz: Quiz 1 (covering material from weeks 1 and 2) (Real),First name,Surname
-u1375694,1.75,Fred,Smith
-u3267832,3.45,Joy,Adams
-u5632660,4.95,Kieth,Trimmer
+u1375694,1.75,Fred Smith,
+u3267832,3.45,Joy Adams,
+u5632660,4.95,Kieth Trimmer,
+u1234567,,Trimp Trump,
 ...
 ```
 
