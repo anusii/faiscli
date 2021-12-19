@@ -16,8 +16,8 @@ COMP4450,Advanced Computing Research Methods,S1/2021,details,,D,72,,Sp
     data2 = """Course,Description,Sem/Year,Enrol.,Status,Grade,Final,Comment,Sp
 COMP8410,Data Mining,Win/2021,details,,NCN,30,,Sp
 COMP8430,Data Wrangling,Sum/2021,details,,PS,50,,Sp
-COMP8410,Data Mining,S1/2021,details,UN,,0,,Sp
-COMP8430,Data Wrangling,S2/2020,details,UN,,0,,Sp
+COMP8410,Data Mining,S1/2021,details,UN,,,,Sp
+COMP8430,Data Wrangling,S2/2020,details,UN,,,,Sp
 COMP6730,Programming for Scientists,S1/2020,details,,PS,50,,Sp
 COMP7240,Introduction to Database Concepts,Aut/2020,details,,CR,61,,Sp
 COMP6730,Programming for Scientists,S1/2019,details,,N,28,,Sp
