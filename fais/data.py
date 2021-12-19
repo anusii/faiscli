@@ -3,7 +3,7 @@ import io
 
 
 def student(uid):
-    data = """Course,Description,Sem/Year,Enrol.,Status,Grade,Final,Comment,Sp
+    data1 = """Course,Description,Sem/Year,Enrol.,Status,Grade,Final,Comment,Sp
 COMP7230,Programming for Data Scientists,Sum/2021,details,,D,74,,Sp
 COMP6240,Relational Databases,S2/2021,details,,CR,62,,Sp
 COMP2700,Cyber Security Fundamentals,S2/2021,details,,HD,89,,SP
@@ -13,6 +13,16 @@ COMP2400,Relational Databases,S2/2021,details,UN,,0,,Sp
 COMP3310,Computer Networks,S1/2021,details,,CR,61,,Sp
 COMP4450,Advanced Computing Research Methods,S1/2021,details,,D,72,,Sp
 """
+    data2 = """Course,Description,Sem/Year,Enrol.,Status,Grade,Final,Comment,Sp
+COMP8410,Data Mining,Win/2021,details,,NCN,30,,Sp
+COMP8430,Data Wrangling,Sum/2021,details,,PS,50,,Sp
+COMP8410,Data Mining,S1/2021,details,UN,,0,,Sp
+COMP8430,Data Wrangling,S2/2020,details,UN,,0,,Sp
+COMP6730,Programming for Scientists,S1/2020,details,,PS,50,,Sp
+COMP7240,Introduction to Database Concepts,Aut/2020,details,,CR,61,,Sp
+COMP6730,Programming for Scientists,S1/2019,details,,N,28,,Sp
+"""
+    data = data2
     with io.StringIO(data) as f:
         df = pd.read_csv(f)
     return(df)
@@ -39,7 +49,7 @@ u4323445,Alexander Watt,,BA/BSc
 
 
 def courses():
-    data = """Unitid,Course,Description,Sem/Year
+    data1 = """Unitid,Course,Description,Sem/Year
 12886,COMP7230,Programming for Data Scientists,Sum/2021
 12715,COMP6240,Relational Databases,S2/2021
 12252,COMP2700,Cyber Security Fundamentals,S2/2021
@@ -49,6 +59,16 @@ def courses():
 12253,COMP3310,Computer Networks,S1/2021
 11961,COMP4450,Advanced Computing Research Methods,S1/2021
     """
+    data2 = """Unitid,Course,Description,Sem/Year
+12886,COMP8410,Data Mining,Win/2021
+12886,COMP8430,Data Wrangling,Sum/2021
+12886,COMP8410,Data Mining,S1/2021
+12886,COMP8430,Data Wrangling,S2/2020
+12886,COMP6730,Programming for Scientists,S1/2020
+12886,COMP7240,Introduction to Database Concepts,Aut/2020
+12886,COMP6730,Programming for Scientists,S1/2019
+    """
+    data = data2
     with io.StringIO(data) as f:
         df = pd.read_csv(f)
     return(df)
