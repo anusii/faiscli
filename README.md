@@ -150,6 +150,27 @@ u1234569,Sally Meakiner,BADAN,3.22,12.00,11.00,none,35.90,4.00,4.50,4.00,none, 
 ...
 ```
 
+TODO **marks**
+
+```bash
+fais marks 12886
+```
+
+```console
+uid,name,course,Ass1,Ass2,Ass3,Ass4,Quiz1,Quiz2,Quiz3,Exam,Final,Grade,Comment
+u1234567,Fred Smith,COMP8430,8.65,13.50,17.00,,4.50,5.00,2.00,22.11,80,HD,Top student.
+...
+```
+
+```bash
+fais marks 12886 u1234567
+```
+
+```console
+uid,name,course,assessment,mark,total,weight,due,submitted,netered,marker,comment,feedback
+
+```
+
 **stats** for the final grades of a course
 
 Summary of the course final marks and grades statistics.
