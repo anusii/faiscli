@@ -70,9 +70,9 @@ export FAIS_USERNAME u1234567
 export FAIS_PASSWORD mysecret
 ```
 
-Or a private text file `private.json` in the user's `~/.config/fais/`
-directory (and be extra careful not to commit it into github -
-.gitignore will ignore it for you):
+Or a text file `config.json` in the user's `~/.config/fais/` directory
+(and be extra careful not to commit it into github - .gitignore will
+ignore it for you):
 
 ```
 {"username": "u1234567", "password": "mysecret"}

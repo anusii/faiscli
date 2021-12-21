@@ -53,7 +53,7 @@ class Config(object):
         self.browser = None
         self.fake = None
         self.wait = None
-        self.private = os.path.expanduser("~/.config/fais/private.json")
+        self.private = os.path.expanduser("~/.config/fais/config.json")
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
 

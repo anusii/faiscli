@@ -51,11 +51,11 @@ sys.argv[0] = utils.APP
 @click.option("-h", "--human", is_flag=True, default=False,
               help="Pretty print for human consumption.")
 @pass_config
-def cli(config, human, debug, fake, username, password):
+def cli(config, human, debug, fake):
     """Access FAIS functionality from the command line."""
     config.human = human
     config.debug = debug
-    config.fake = fake
+    config.fake = False
 
 #    if False:  # command in ['wget']:
 #        utils.login_wattle()
