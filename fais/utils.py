@@ -54,8 +54,6 @@ class Config(object):
         self.fake = None
         self.wait = None
         self.private = os.path.expanduser("~/.config/fais/private.json")
-        self.username = None
-        self.password = None
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
 
@@ -92,9 +90,7 @@ convert-html-tables-into-csv-files-in-python"""
 
 @pass_config
 def get_username(config):
-    if config.username is not None:
-        return config.username
-    elif os.environ.get("FAIS_USERNAME"):
+    if os.environ.get("FAIS_USERNAME"):
         return os.environ.get("FAIS_USERNAME")
     elif os.path.exists(config.private):
         with open(config.private, 'r') as file:
@@ -111,9 +107,7 @@ def get_username(config):
 
 @pass_config
 def get_password(config):
-    if config.password is not None:
-        return config.password
-    elif os.environ.get("FAIS_PASSWORD"):
+    if os.environ.get("FAIS_PASSWORD"):
         return os.environ.get("FAIS_PASSWORD")
     elif os.path.exists(config.private):
         with open(config.private, 'r') as file:
