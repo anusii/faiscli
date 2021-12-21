@@ -50,12 +50,18 @@ sys.argv[0] = utils.APP
               help="Return fake data.")
 @click.option("-h", "--human", is_flag=True, default=False,
               help="Pretty print for human consumption.")
+@click.option("-u", "--username", default=None,
+              help="User name to conenct to fais web app.")
+@click.option("-p", "--password", default=None,
+              help="Password to conenct to fais web app.")
 @pass_config
-def cli(config, human, debug, fake):
+def cli(config, human, debug, fake, username, password):
     """Access FAIS functionality from the command line."""
     config.human = human
     config.debug = debug
     config.fake = fake
+    config.username = username
+    config.password = password
 
 #    if False:  # command in ['wget']:
 #        utils.login_wattle()
