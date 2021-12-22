@@ -55,7 +55,7 @@ def cli(config, human, debug, fake):
     """Access FAIS functionality from the command line."""
     config.human = human
     config.debug = debug
-    config.fake = False
+    config.fake = fake
 
 #    if False:  # command in ['wget']:
 #        utils.login_wattle()
