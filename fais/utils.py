@@ -91,18 +91,28 @@ convert-html-tables-into-csv-files-in-python"""
 @pass_config
 def get_username(config):
     if os.environ.get("FAIS_USERNAME"):
-        return os.environ.get("FAIS_USERNAME")
+        username = os.environ.get("FAIS_USERNAME")
+        source = "environment variable FAIS_USERNAME"
     elif os.path.exists(config.private):
         with open(config.private, 'r') as file:
-            return yaml.safe_load(file)["username"]
+            username = yaml.safe_load(file)["username"]
+            source = config.private
     else:
         try:
             username = input("Username: ")
-            assert username != ""
-            return username
+            source = "login page"
         except Exception:
             info_error("a username is required to continue")
             sys.exit(1)
+
+    if username == "":
+        info_error(f"empty username according to {source}")
+        sys.exit(1)
+
+    if config.debug:
+        info_success(f"username obtained from {source}")
+
+    return username
 
 
 @pass_config
@@ -152,7 +162,8 @@ def login(config):
 
     elem = browser.find_element_by_name("Username")
     elem.clear()
-    elem.send_keys(get_username())
+    username = get_username()
+    elem.send_keys(username)
 
     elem = browser.find_element_by_name("Password")
     elem.clear()
@@ -160,7 +171,9 @@ def login(config):
 
     elem.send_keys(Keys.RETURN)
 
-    assert "FAIS Details" in browser.title, "fais: failed to login"
+    if "FAIS Details" not in browser.title:
+        info_error(f"failed to login as user '{username}'")
+        sys.exit(1)
 
     return(browser)
 
@@ -190,9 +203,9 @@ def info_message(uid_or_group, message, colour=None, err=False):
     click.echo(": {}".format(message))
 
 
-def info_success(uid_or_group, message):
+def info_success(message):
     """Write success to stdout with format `KEY: ___` in green colour"""
-    info_message(uid_or_group, message, "green")
+    info_message(APP, message, "green")
 
 
 def info_warning(message):
