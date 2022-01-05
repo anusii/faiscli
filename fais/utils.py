@@ -100,17 +100,17 @@ def get_username(config):
     else:
         try:
             username = input("Username: ")
-            source = "login page"
+            source = "prompt"
         except Exception:
-            info_error("a username is required to continue")
+            info_error("a username is required to continue.")
             sys.exit(1)
 
     if username == "":
-        info_error(f"empty username according to {source}")
+        info_error(f"empty username according to {source}.")
         sys.exit(1)
 
     if config.debug:
-        info_success(f"username obtained from {source}")
+        info_success(f"username obtained from {source}.")
 
     return username
 
@@ -118,18 +118,28 @@ def get_username(config):
 @pass_config
 def get_password(config):
     if os.environ.get("FAIS_PASSWORD"):
-        return os.environ.get("FAIS_PASSWORD")
+        password = os.environ.get("FAIS_PASSWORD")
+        source = "environment variable FAIS_PASSWORD"
     elif os.path.exists(config.private):
         with open(config.private, 'r') as file:
-            return yaml.safe_load(file)["password"]
+            password = yaml.safe_load(file)["password"]
+            source = config.private
     else:
         try:
             password = getpass.getpass()
-            assert password != ""
-            return password
+            source = "prompt"
         except Exception:
             info_error("a password is required to continue")
             sys.exit(1)
+
+    if password == "":
+        info_error(f"empty password according to {source}.")
+        sys.exit(1)
+
+    if config.debug:
+        info_success(f"password obtained from {source}.")
+
+    return password
 
 
 def html2csv(table):
