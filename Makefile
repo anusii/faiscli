@@ -2,7 +2,7 @@
 #
 # Makefile for fais command line interface
 #
-# Time-stamp: <Friday 2021-12-03 20:03:28 AEDT Graham Williams>
+# Time-stamp: <Thursday 2022-01-06 15:50:50 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -16,7 +16,7 @@
 #   Trivial update or bug fix
 
 APP=fais
-VER=0.0.0
+VER=0.1.0
 DATE=$(shell date +%Y-%m-%d)
 
 ########################################################################
