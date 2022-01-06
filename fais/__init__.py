@@ -26,6 +26,7 @@
 # Author: Graham.Williams@anu.edu.au
 
 
+import os
 import sys
 import click
 
@@ -56,6 +57,12 @@ def cli(config, human, debug, fake):
     config.human = human
     config.debug = debug
     config.fake = fake
+
+    # If a dummy username is used, the utilise the fake data.
+
+    dummy = os.environ.get("FAIS_USERNAME")
+    if dummy is not None and dummy == "u1234567":
+        config.fake = True
 
 #    if False:  # command in ['wget']:
 #        utils.login_wattle()

@@ -155,6 +155,9 @@ def html2csv(table):
 @pass_config
 def login(config):
 
+    username = get_username()
+    password = get_password()
+
     # Driver/Session
 
     options = webdriver.ChromeOptions()
@@ -172,12 +175,11 @@ def login(config):
 
     elem = browser.find_element_by_name("Username")
     elem.clear()
-    username = get_username()
     elem.send_keys(username)
 
     elem = browser.find_element_by_name("Password")
     elem.clear()
-    elem.send_keys(get_password())
+    elem.send_keys(password)
 
     elem.send_keys(Keys.RETURN)
 

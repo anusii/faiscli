@@ -70,13 +70,22 @@ export FAIS_USERNAME u1234567
 export FAIS_PASSWORD mysecret
 ```
 
-Or a text file `config.json` in the user's `~/.config/fais/` directory
-(and be extra careful not to commit it into github - .gitignore will
-ignore it for you):
+Or a text file `config.json` in the user's `~/.config/fais/` directory:
 
 ```
 {"username": "u1234567", "password": "mysecret"}
 ```
+
+**WARNING** Be extra careful not to accidentally commit this file into
+github, for example by using a .gitignore file, and be aware that a
+sysadmin on your computer can view the file and thereby compromise
+your login information.
+
+The environment variables take precedence over the config.json file.
+
+A special username of u1234567 set via the environment variable
+FAIS_USERNAME will enable the `--fake` option, useful for
+demonstration purposes.
 
 ## Examples
 
