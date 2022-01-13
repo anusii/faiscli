@@ -30,7 +30,7 @@ COMP6730,Programming for Scientists,S1/2019,details,,N,28,,Sp
 
 def students():
     data = """Student ID,Fore/Last name(s),Initial(s),Degree
-u1234567,Deshayla Chaniah,,MADAN
+u1234567,Deshayla Frederica Chaniah,,MADAN
 u1234568,Adelya Lilias,,InfTech
 u1234569,Myiesha Quillian,,Engineer
 u1234560,Sailee Darsy,,FDD Eng. & Adv. Comp.

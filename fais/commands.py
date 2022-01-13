@@ -295,8 +295,9 @@ def student(config, uid, session):
 
     if config.fake:
         df = data.student(uid)
-        name = "Harriet Potter"
-        title = f"Details for student: {uid} - Harriet Potter"
+        ds = data.students()
+        name = ds[ds['Student ID'] == uid]['Fore/Last name(s)'][0]
+        title = f"Details for student: {uid} - {name}"
         sex = "F"
         degree = "MADAN"
 
