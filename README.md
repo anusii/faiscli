@@ -242,6 +242,13 @@ Details for student: u1234567 -  Cathey Togo - F - MComp
 24  COMP2610                                 Information Theory  S2/2018            P    53        
 ```
 
+To get the students userid:
+
+```console
+$ fais -h student `fais students | grep -i frederica | head -1 | cut -d',' -f1
+...
+```
+
 *TODO*
 
 Refinements to the output
