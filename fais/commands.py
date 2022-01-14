@@ -376,7 +376,7 @@ def student(config, uid, session):
         # 20220114 Utilise data.courses. If in there, update Unitid,
         # otherwise jsut use 00000.
 
-        df['Unitid'] = None
+        df['Unitid'] = 0
         courses = data.courses()
         for i, r in df.iterrows():
             unit = courses[(courses["Course"] == r["Course"]) &
