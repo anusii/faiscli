@@ -84,7 +84,7 @@ def courses():
 12886,COMP7240,Introduction to Database Concepts,Aut/2020
 12886,COMP6730,Programming for Scientists,S1/2019
     """
-    # 20220114 Dump from `fais courses`.
+    # 20220114 Dump from `fais courses` = 2090 lines
     # Need quotes around the description column.
     actual = """Unitid,Course,Description,Sem/Year
 13157,COMP8539,Advvanced Topics in Computer Vision,S2/2022
