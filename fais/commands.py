@@ -296,7 +296,16 @@ def student(config, uid, session):
     if config.fake:
         df = data.student(uid)
         ds = data.students()
-        name = ds[ds['Student ID'] == uid]['Fore/Last name(s)'][0]
+        entry = ds[ds['Student ID'] == uid]
+        if not len(entry):
+            if config.human:
+                utils.info_error(f"no such student `{uid}'")
+                sys.exit(1)
+            else:
+                print("UID,Name,Sex,Unitid,Course,Description," +
+                      "Sem/Year,Status,Grade,Final,Comment")
+                sys.exit(0)
+        name = entry['Fore/Last name(s)'][0]
         title = f"Details for student: {uid} - {name}"
         sex = "F"
         degree = "MADAN"
@@ -361,10 +370,20 @@ def student(config, uid, session):
         degree = degree.text
 
         # 20211217 gjw Fake added unitid. TODO Investigate if can
-        # obtain obtain unitid throug scrpaing to add it in - i.e.,
+        # obtain obtain unitid through scrpaing to add it in - i.e.,
         # COURSES might need to be loaded by default on startup?
+        #
+        # 20220114 Utilise data.courses. If in there, update Unitid,
+        # otherwise jsut use 00000.
 
-        df['Unitid'] = 12886
+        df['Unitid'] = None
+        courses = data.courses()
+        for i, r in df.iterrows():
+            unit = courses[(courses["Course"] == r["Course"]) &
+                           (courses["Sem/Year"] == r["Sem/Year"])]
+            if (len(unit)):
+                df.at[i, "Unitid"] = unit.iloc[0]["Unitid"]
+
 
     # Filter for the session of interest.
 
