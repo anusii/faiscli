@@ -14,13 +14,21 @@ COMP3310,Computer Networks,S1/2021,details,,CR,61,,Sp
 COMP4450,Advanced Computing Research Methods,S1/2021,details,,D,72,,Sp
 """
     data2 = """Course,Description,Sem/Year,Enrol.,Status,Grade,Final,Comment,Sp
-COMP8410,Data Mining,Win/2021,details,,NCN,30,,Sp
-COMP8430,Data Wrangling,Sum/2021,details,,PS,50,,Sp
+COMP3600,Algorithms,S2/2021,details,,CR,61,,Sp
+COMP2400,Relational Databases,S2/2021,details,UN,,0,,Sp
+COMP8410,Data Mining,Win/2021,details,,NCN,,,Sp
+COMP8430,Data Wrangling,S1/2021,details,,PS,50,,Sp
+COMP3310,Computer Networks,S1/2021,details,,CR,61,,Sp
+COMP4450,Advanced Computing Research Methods,S1/2021,details,,D,72,,Sp
 COMP8410,Data Mining,S1/2021,details,UN,,,,Sp
-COMP8430,Data Wrangling,S2/2020,details,UN,,,,Sp
+COMP7230,Programming for Data Scientists,Sum/2021,details,,D,74,,Sp
+COMP6240,Relational Databases,Win/2020,details,,CR,62,,Sp
+COMP2700,Cyber Security Fundamentals,S2/2020,details,,HD,89,,SP
+COMP4550,Advanced Computing Research Project,S2/2020,details,,KU,0,,Sp
+COMP8430,Data Wrangling,S1/2020,details,UN,,,,Sp
 COMP6730,Programming for Scientists,S1/2020,details,,PS,50,,Sp
-COMP7240,Introduction to Database Concepts,Aut/2020,details,,CR,61,,Sp
-COMP6730,Programming for Scientists,S1/2019,details,,N,28,,Sp
+COMP7240,Introduction to Database Concepts,S1/2020,details,,HD,100,,Sp
+COMP6730,Programming for Scientists,S1/2020,details,,N,28,,Sp
 """
     data = data2
     with io.StringIO(data) as f:
@@ -34,7 +42,7 @@ u1234567,Deshayla Frederica Chaniah,,MADAN
 u1234568,Adelya Lilias,,InfTech
 u1234569,Myiesha Quillian,,Engineer
 u1234560,Sailee Darsy,,FDD Eng. & Adv. Comp.
-u1234561,Artia Jaysson,,BPPE
+u1234561,Adelya Jaysson,,BPPE
 u1234562,Kyniah Avontae,,FDD Eng. & Adv. Comp.
 u1234570,Adabella Sheryce,,Engineer
 u1234571,Ludy Shalva,,CADAN
@@ -60,6 +68,14 @@ def courses():
 11961,COMP4450,Advanced Computing Research Methods,S1/2021
     """
     data2 = """Unitid,Course,Description,Sem/Year
+12886,COMP7230,Programming for Data Scientists,Sum/2021
+12715,COMP6240,Relational Databases,S2/2021
+12252,COMP2700,Cyber Security Fundamentals,S2/2021
+11960,COMP4550,Advanced Computing Research Project,S2/2021
+12887,COMP3600,Algorithms,S2/2021
+12716,COMP2400,Relational Databases,S2/2021
+12253,COMP3310,Computer Networks,S1/2021
+11961,COMP4450,Advanced Computing Research Methods,S1/2021
 12886,COMP8410,Data Mining,Win/2021
 12886,COMP8430,Data Wrangling,Sum/2021
 12886,COMP8410,Data Mining,S1/2021
