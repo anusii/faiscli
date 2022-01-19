@@ -406,6 +406,10 @@ def student(config, uid, session):
         df["Sex"] = sex
 
         df = df.iloc[:, [8, 9, 10, 11, 7, 0, 1, 2, 3, 4, 5, 6]]
+
+        # Add start_date column
+        df['start_date'] = df.apply(lambda row: start_date(row), axis=1)
+        df = df.sort_values(["start_date", "Final"], ascending=(True, True))
         click.echo(df.to_csv(index=False).strip())
 
     if not config.fake:
@@ -476,3 +480,21 @@ A pattern can be specified as a filter on the UID and Name.
 
     if not config.fake:
         utils.logout()
+
+def start_date(row):
+    sem = row["Sem/Year"].split("/")[0]
+    year = row["Sem/Year"].split("/")[1]
+    if sem == "Sum":
+        return year+"-"+"0"
+    elif sem == "S1":
+        return year+"-"+"1"
+    elif sem == "Aut":
+        return year+"-"+"2"
+    elif sem == "Win":
+        return year+"-"+"3"
+    elif sem == "S2":
+        return year+"-"+"4"
+    elif sem == "Spr":
+        return year+"-"+"5"
+    else:
+        return ""
