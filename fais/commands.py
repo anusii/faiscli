@@ -384,7 +384,6 @@ def student(config, uid, session):
             if (len(unit)):
                 df.at[i, "Unitid"] = unit.iloc[0]["Unitid"]
 
-
     # Filter for the session of interest.
 
     if session != "":
@@ -408,8 +407,15 @@ def student(config, uid, session):
         df = df.iloc[:, [8, 9, 10, 11, 7, 0, 1, 2, 3, 4, 5, 6]]
 
         # Add start_date column
+
         df['start_date'] = df.apply(lambda row: start_date(row), axis=1)
-        df = df.sort_values(["start_date", "Final"], ascending=(True, True))
+
+        # Sort by start date and then by Final so in FAIS+ the chart
+        # is sorted the way we want it. Arguable whether this should
+        # be done here or in Flutter, but okay for now.
+
+        df = df.sort_values(["start_date", "Final"], ascending=(True, False))
+
         click.echo(df.to_csv(index=False).strip())
 
     if not config.fake:
