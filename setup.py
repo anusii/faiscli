@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-REQUIREMENTS = ['Click']
+REQUIREMENTS = ['Click', 'plotnine', 'selenium']
 
 CLASSIFIERS = [
     'Development Status :: 4 - Beta',
