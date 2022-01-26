@@ -58,7 +58,7 @@ def cli(config, human, debug, fake):
     config.debug = debug
     config.fake = fake
 
-    # If a dummy username is used, the utilise the fake data.
+    # If a dummy username is used, then utilise the fake data.
 
     dummy = os.environ.get("FAIS_USERNAME")
     if dummy is not None and dummy == "u1234567":
