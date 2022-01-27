@@ -20,45 +20,19 @@ def read_dataset(f):
 
 
 def student(uid):
-    """
-    CSV filenames to be used here start with
-    the respective function name. Function name here
-    is "student", hence the corresponding csv files to choose
-    from the "dataset/" folder are: -
-    1. "student-data1.csv"
-    2. "student-data2.csv"
-    """
-    return read_dataset('student-data2.csv')
+    return read_dataset('student.csv')
 
 
 def students():
-    """
-    Respective csv data files to choose from:
-    1. students-data.csv
-    """
-    return read_dataset('students-data.csv')
+    return read_dataset('students.csv')
     
 
 def programs():
-    """
-    Respective csv data files to choose from:
-    1. programs-data.csv
-    """
-    return read_dataset('programs-data.csv')      #TODO change programs-data.csv contents with the original ones.
+    return read_dataset('programs.csv')      #TODO change programs-data.csv contents with the original ones.
 
 def courses():
-    """
-    Respective csv data files to choose from:
-    1. courses-data1.csv
-    2. courses-data2.csv
-    3. courses-actual.csv
-    """
-    return read_dataset('courses-actual.csv')
+    return read_dataset('courses.csv')
 
 
 def final(unitid):
-    """
-    Respective csv data files to choose from:
-    1. final-data.csv
-    """
-    return read_dataset('final-data.csv')
+    return read_dataset('final.csv')
