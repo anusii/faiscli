@@ -518,9 +518,9 @@ def programs(config, pattern):
     All current programs. 
     A pattern can be specified as a filter for the programs name. Can also use grep.
     """
-    df = data.programs()       # list all the programs.
+    df = data.programs()       # list all the programs. No need of -f flag.
 
-    # Filter by uid or name
+    # Filter by program name
 
     if pattern != "":
         d1 = df[df['programs'].str.contains(pattern)]
