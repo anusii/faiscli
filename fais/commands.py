@@ -546,4 +546,5 @@ def programs(config, pattern):
         click.echo(df)
     else:
         click.echo(df.to_csv(index=False).strip())
-        
+
+
