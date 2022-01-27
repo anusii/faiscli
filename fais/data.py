@@ -1,20 +1,32 @@
+import os
+import fais
+import inspect
+
 import pandas as pd
+
+# Determine package install location and assume data
+# available there! TODO Need to orchestrate this for
+# package install -through pip3 - currently works with
+# pip install -e .
+
+PKG = os.path.dirname(inspect.getfile(fais))
+DATA = os.path.join(PKG, 'dataset')
 
 
 def read_dataset(f):
-    folder_name = 'dataset/'
-    df = pd.read_csv(f'./{folder_name}{f}')
+    PATH = os.path.join(DATA, f)
+    df = pd.read_csv(PATH)
     return (df)
 
 
 def student(uid):
     """
     CSV filenames to be used here start with
-    the respective function name. Here- function name 
+    the respective function name. Here- function name
     is "student" hence, corresponding csv files to choose
-    from the "dataset/" folder are: - 
-    1. "student-data1.csv" 
-    2. "student-data2.csv" 
+    from the "dataset/" folder are: -
+    1. "student-data1.csv"
+    2. "student-data2.csv"
     """
     return read_dataset('student-data2.csv')
 
@@ -43,4 +55,3 @@ def final(unitid):
     1. final-data.csv
     """
     return read_dataset('final-data.csv')
-
