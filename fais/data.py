@@ -1,24 +1,46 @@
 import pandas as pd
 
 
-def read_data_csv(f):
-    # folder_name = 'dataset/'
-    df = pd.read_csv(f)
+def read_dataset(f):
+    folder_name = 'dataset/'
+    df = pd.read_csv(f'./{folder_name}{f}')
     return (df)
 
 
 def student(uid):
-    return read_data_csv('./dataset/student-data2.csv')
+    """
+    CSV filenames to be used here start with
+    the respective function name. Here- function name 
+    is "student" hence, corresponding csv files to choose
+    from the "dataset/" folder are: - 
+    1. "student-data1.csv" 
+    2. "student-data2.csv" 
+    """
+    return read_dataset('student-data2.csv')
 
 
 def students():
-    return read_data_csv('./dataset/students-data.csv')
+    """
+    Respective csv data files to choose from:
+    1. students-data.csv
+    """
+    return read_dataset('students-data.csv')
     
 
 def courses():
-    return read_data_csv('./dataset/courses-actual.csv')
+    """
+    Respective csv data files to choose from:
+    1. courses-data1.csv
+    2. courses-data2.csv
+    3. courses-actual.csv
+    """
+    return read_dataset('courses-actual.csv')
 
 
 def final(unitid):
-    return read_data_csv('./dataset/final-data.csv')
+    """
+    Respective csv data files to choose from:
+    1. final-data.csv
+    """
+    return read_dataset('final-data.csv')
 
