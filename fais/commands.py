@@ -516,16 +516,16 @@ def start_date(row):
 def programs(config, pattern):
     """
     All current programs. 
-    A pattern can be specified as a filter for the programs name TODO -- Ask.
+    A pattern can be specified as a filter for the programs name. Can also use grep.
     """
-    df = data.programs()
+    df = data.programs()       # list all the programs.
 
     # Filter by uid or name
 
     if pattern != "":
-        d1 = df[df['UID'].str.contains(pattern)]
-        d2 = df[df['Name'].str.contains(pattern)]
-        df = pd.concat([d1, d2])
+        d1 = df[df['programs'].str.contains(pattern)]
+        d2 = df[df['year'].str.contains(pattern)]
+        df = pd.concat([d1, d2])     #TODO
 
     # Check the -h flag for pretty printing.
     if config.human:

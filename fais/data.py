@@ -22,8 +22,8 @@ def read_dataset(f):
 def student(uid):
     """
     CSV filenames to be used here start with
-    the respective function name. Here- function name
-    is "student" hence, corresponding csv files to choose
+    the respective function name. Function name here
+    is "student", hence the corresponding csv files to choose
     from the "dataset/" folder are: -
     1. "student-data1.csv"
     2. "student-data2.csv"
@@ -44,7 +44,7 @@ def programs():
     Respective csv data files to choose from:
     1. programs-data.csv
     """
-    return read_dataset('programs-data.csv')
+    return read_dataset('programs-data.csv')      #TODO change programs-data.csv contents with the original ones.
 
 def courses():
     """
