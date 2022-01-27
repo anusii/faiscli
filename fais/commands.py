@@ -504,3 +504,31 @@ def start_date(row):
         return year+"-"+"5"
     else:
         return ""
+
+
+
+########################################################################
+# PROGRAMS
+
+@click.command()
+@click.argument("pattern", default="")
+@pass_config
+def programs(config, pattern):
+    """
+    All current programs. 
+    A pattern can be specified as a filter for the programs name TODO -- Ask.
+    """
+    df = data.programs()
+
+    # Filter by uid or name
+
+    if pattern != "":
+        d1 = df[df['UID'].str.contains(pattern)]
+        d2 = df[df['Name'].str.contains(pattern)]
+        df = pd.concat([d1, d2])
+
+    # Check the -h flag for pretty printing.
+    if config.human:
+        click.echo(df)
+    else:
+        click.echo(df.to_csv(index=False).strip())

@@ -27,6 +27,13 @@ def students():
     return read_dataset('students-data.csv')
     
 
+def programs():
+    """
+    Respective csv data files to choose from:
+    1. programs-data.csv
+    """
+    return read_dataset('programs-data.csv')
+
 def courses():
     """
     Respective csv data files to choose from:
