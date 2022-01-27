@@ -374,7 +374,7 @@ def student(config, uid, session):
         # COURSES might need to be loaded by default on startup?
         #
         # 20220114 Utilise data.courses. If in there, update Unitid,
-        # otherwise jsut use 00000.
+        # otherwise just use 00000.
 
         df['Unitid'] = 0
         courses = data.courses()
