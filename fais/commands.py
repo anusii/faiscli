@@ -536,13 +536,14 @@ def programs(config, pattern):
 
         df = pd.concat([d1, d2, d3, d4]).drop_duplicates()     
         df.index = range(0, len(df))
-        click.echo("---------------------------------------------")
-        click.echo("Note: \"Programs' Patterns Are Case-Sensitive\"")
-        click.echo("---------------------------------------------")
+
 
     # Check the -h flag for pretty printing (human consumable).
 
     if config.human:
+        click.echo("---------------------------------------------")
+        click.echo("Note: \"Programs' Patterns Are Case-Sensitive\"")
+        click.echo("---------------------------------------------")
         click.echo(df)
     else:
         click.echo(df.to_csv(index=False).strip())
