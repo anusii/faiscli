@@ -58,7 +58,7 @@ def cli(config, human, debug, fake):
     config.debug = debug
     config.fake = fake
 
-    # If a dummy username is used, the utilise the fake data.
+    # If a dummy username is used, then utilise the fake data.
 
     dummy = os.environ.get("FAIS_USERNAME")
     if dummy is not None and dummy == "u1234567":
@@ -77,6 +77,8 @@ cli.add_command(cmd.function)
 cli.add_command(cmd.stats)
 cli.add_command(cmd.student)
 cli.add_command(cmd.students)
+cli.add_command(cmd.programs)
+
 
 if __name__ == '__main__':
     try:

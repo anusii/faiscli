@@ -374,7 +374,7 @@ def student(config, uid, session):
         # COURSES might need to be loaded by default on startup?
         #
         # 20220114 Utilise data.courses. If in there, update Unitid,
-        # otherwise jsut use 00000.
+        # otherwise just use 00000.
 
         df['Unitid'] = 0
         courses = data.courses()
@@ -504,3 +504,48 @@ def start_date(row):
         return year+"-"+"5"
     else:
         return ""
+
+
+
+########################################################################
+# PROGRAMS
+
+@click.command()
+@click.argument("pattern", default="")
+@pass_config
+def programs(config, pattern):
+    """
+    All current programs. 
+    A pattern can be specified as a filter for the programs name. Can also use grep.
+    """
+
+    # list all the programs. No need of -f flag.
+
+    df = data.programs()       
+
+    # Filter by program name.
+    # NOTE: Filters are case-sensitive.
+
+    if pattern != "":
+        d1 = df[df['program'].str.contains(pattern)]
+        d2 = df[df['year'].astype(str).str.contains(pattern)]
+        d3 = df[df['admit_year'].astype(str).str.contains(pattern)]
+        d4 = df[df['nenrolled'].astype(str).str.contains(pattern)]
+
+        # Union of the resultants
+
+        df = pd.concat([d1, d2, d3, d4]).drop_duplicates()     
+        df.index = range(0, len(df))
+
+
+    # Check the -h flag for pretty printing (human consumable).
+
+    if config.human:
+        click.echo("---------------------------------------------")
+        click.echo("Note: \"Programs' Patterns Are Case-Sensitive\"")
+        click.echo("---------------------------------------------")
+        click.echo(df)
+    else:
+        click.echo(df.to_csv(index=False).strip())
+
+
