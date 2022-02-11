@@ -559,7 +559,7 @@ def programs(config, pattern):
 @click.argument("programid")
 @pass_config
 def program(config, programid):
-    """Program details."""
+    """Provide with a program_id as argument and use `fais program <id>`."""
 
     # list all programs 
 
