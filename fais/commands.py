@@ -570,7 +570,7 @@ def program(config, programid):
 
     if config.human:
         click.echo("-----------------------------------------------------")
-        click.echo("Note: \"Listing programs...\"")
+        click.echo("Note: \"Listing programs matching program_id...\"")
         click.echo("-----------------------------------------------------")
         click.echo(return_df)
     else:
