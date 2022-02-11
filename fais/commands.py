@@ -566,7 +566,7 @@ def program(config, programid):
     df = data.programs()
 
     return_df = df[df['program_id'].astype(str).str.contains(programid)]
-    return_df.index = range(0, len(df))
+    return_df.index = range(0, len(return_df))
 
     if config.human:
         click.echo("-----------------------------------------------------")
