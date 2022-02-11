@@ -78,6 +78,7 @@ cli.add_command(cmd.stats)
 cli.add_command(cmd.student)
 cli.add_command(cmd.students)
 cli.add_command(cmd.programs)
+cli.add_command(cmd.program)
 
 
 if __name__ == '__main__':
