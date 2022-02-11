@@ -27,6 +27,7 @@
 # Author: Graham.Williams@anu.edu.au
 
 
+from curses import echo
 import re
 import sys
 import click
@@ -506,7 +507,6 @@ def start_date(row):
         return ""
 
 
-
 ########################################################################
 # PROGRAMS
 
@@ -532,10 +532,12 @@ def programs(config, pattern):
         d2 = df[df['year'].astype(str).str.contains(pattern)]
         d3 = df[df['admit_year'].astype(str).str.contains(pattern)]
         d4 = df[df['nenrolled'].astype(str).str.contains(pattern)]
+        d5 = df[df['program_id'].astype(str).str.contains(pattern)]
+        d6 = df[df['program_desc'].astype(str).str.contains(pattern)]
 
         # Union of the resultants
 
-        df = pd.concat([d1, d2, d3, d4]).drop_duplicates()     
+        df = pd.concat([d1, d2, d3, d4, d5, d6]).drop_duplicates()     
         df.index = range(0, len(df))
 
 
@@ -550,3 +552,26 @@ def programs(config, pattern):
         click.echo(df.to_csv(index=False).strip())
 
 
+########################################################################
+# PROGRAM
+
+@click.command()
+@click.argument("programid")
+@pass_config
+def program(config, programid):
+    """Provide with a program_id as argument and use `fais program <id>`."""
+
+    # list all programs 
+
+    df = data.programs()
+
+    return_df = df[df['program_id'].astype(str).str.contains(programid)]
+    return_df.index = range(0, len(return_df))
+
+    if config.human:
+        click.echo("-----------------------------------------------------")
+        click.echo("Note: \"Listing programs matching program_id...\"")
+        click.echo("-----------------------------------------------------")
+        click.echo(return_df)
+    else:
+        click.echo(return_df.to_csv(index=False).strip())

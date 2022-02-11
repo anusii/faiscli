@@ -30,6 +30,8 @@ Commands:
   stats       Stats for final grades for a course.
   student     Student details.
   students    All current students.
+  programs    Programs/degrees offered at ANU.
+  program     Individual program details
 ```
 
 Default output is **csv**. Use `-h` (`--human``) for output in tabular
