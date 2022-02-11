@@ -27,7 +27,6 @@
 # Author: Graham.Williams@anu.edu.au
 
 
-from curses import echo
 import re
 import sys
 import click
