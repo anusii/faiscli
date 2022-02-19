@@ -1,16 +1,30 @@
 Course,Description,Sem/Year,Enrol.,Status,Grade,Final,Comment,Sp
-COMP3600,Algorithms,S2/2021,details,,CR,61,,Sp
-COMP2400,Relational Databases,S2/2021,details,UN,,0,,Sp
-COMP8410,Data Mining,Win/2021,details,,NCN,,,Sp
-COMP8430,Data Wrangling,S1/2021,details,,PS,50,,Sp
-COMP3310,Computer Networks,S1/2021,details,,CR,61,,Sp
-COMP4450,Advanced Computing Research Methods,S1/2021,details,,D,72,,Sp
-COMP8410,Data Mining,S1/2021,details,UN,,,,Sp
-COMP7230,Programming for Data Scientists,Sum/2021,details,,D,74,,Sp
-COMP6240,Relational Databases,Win/2020,details,,CR,62,,Sp
-COMP2700,Cyber Security Fundamentals,S2/2020,details,,HD,89,,SP
-COMP4550,Advanced Computing Research Project,S2/2020,details,,KU,0,,Sp
-COMP8430,Data Wrangling,S1/2020,details,UN,,,,Sp
-COMP6730,Programming for Scientists,S1/2020,details,,PS,50,,Sp
-COMP7240,Introduction to Database Concepts,S1/2020,details,,HD,100,,Sp
-COMP6730,Programming for Scientists,S1/2020,details,,N,28,,Sp
+COMP1100,Introduction to Programming and Algorithms,S1/2014,details,,P,51,,Sp
+COMP1710,Web Development and Design,S1/2014,details,,CR,68,,Sp
+COMP1130,Introduction to Advanced Computing I,S1/2014,details,,NCN,,,Sp
+COMP1110,Introduction to Software Systems,S2/2014,details,UN,,,,Sp
+COMP2400,Relational Databases,S2/2015,details,,P,57,,Sp
+COMP1110,Introduction to Software Systems,S2/2015,details,,PS,50,,Sp
+COMP2300,Computer Organisation and Program Execution,S1/2016,details,UN,,,,Sp
+COMP2410,Networked Information Systems,S1/2016,details,UN,,,,Sp
+COMP2410,Networked Information Systems,S1/2018,details,,CR,69,,Sp
+ENGN2219,Computing for Engineering Simulation,S1/2018,details,,P,55,,Sp
+COMP2100,Software Design Methodologies,S2/2018,details,,P,59,,Sp
+COMP1600,Foundations of Computing,S2/2018,details,,NCN,,,Sp
+COMP2300,Computer Organisation and Program Execution,S1/2019,details,,D,73,,Sp
+COMP3310,Computer Networks,S1/2019,details,,WD,17,SAS Graded,Sp
+COMP3120,Managing Software Development,S1/2019,details,UN,,,,Sp
+ENGN2218,Electronic Systems and Design,S1/2019,details,,,,,Sp
+ENGN3213,Digital Systems and Microprocessors,S1/2019,details,,,,,Sp
+COMP2120,Software Engineering,S2/2019,details,,D,71,,Sp
+COMP2310,Systems Networks and Concurrency,S2/2019,details,,PS,50,,Sp
+ENGN2228,Signal Processing,S2/2019,details,,WD,,SAS Graded,Sp
+COMP3120,Managing Software Development,S1/2020,details,,D,72,,Sp
+COMP3740,Project Work in Computing,S1/2020,details,,CR,69,,Sp
+COMP3740,Project Work in Computing,S2/2020,details,,P,53,,Sp
+COMP1600,Foundations of Computing,S2/2020,details,,WD,16,SAS Graded,Sp
+COMP3310,Computer Networks,S1/2021,details,,CR,60,,Sp
+COMP3703,Software Security,S1/2021,details,,WD,6,SAS Graded,Sp
+COMP3425,Data Mining,S1/2021,details,UN,,,,Sp
+COMP3710,Computer Microarchitecture,S2/2021,details,,HD,86,,Sp
+COMP1600,Foundations of Computing,S2/2021,details,,P,52,,Sp
