@@ -27,7 +27,6 @@
 # Author: Graham.Williams@anu.edu.au
 
 
-from curses import echo
 import re
 import sys
 import click
@@ -556,21 +555,21 @@ def programs(config, pattern):
 # PROGRAM
 
 @click.command()
-@click.argument("programid")
+@click.argument("program_name")
 @pass_config
-def program(config, programid):
-    """Provide with a program_id as argument and use `fais program <id>`."""
+def program(config, program_name):
+    """Provide with a program_name as argument and use `fais program <program_name>`."""
 
     # list all programs 
 
     df = data.programs()
 
-    return_df = df[df['program_id'].astype(str).str.contains(programid)]
+    return_df = df[df['program'].astype(str).str.contains(program_name)]
     return_df.index = range(0, len(return_df))
 
     if config.human:
         click.echo("-----------------------------------------------------")
-        click.echo("Note: \"Listing programs matching program_id...\"")
+        click.echo("Note: \"Listing programs matching program_name...\"")
         click.echo("-----------------------------------------------------")
         click.echo(return_df)
     else:
