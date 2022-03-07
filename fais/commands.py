@@ -553,18 +553,20 @@ def programs(config, pattern):
 
 ########################################################################
 # PROGRAM
+# Get program details by providing the program_desc as the key.
 
 @click.command()
-@click.argument("program_name")
+@click.argument("program_desc")
 @pass_config
-def program(config, program_name):
-    """Provide with a program_name as argument and use `fais program <program_name>`."""
+def program(config, program_desc):
+    """Provide with a program_desc as argument and use `fais program <program_desc>`."""
 
     # list all programs 
 
     df = data.programs()
 
-    return_df = df[df['program'].astype(str).str.contains(program_name)]
+    # return_df = df[df['program_desc'].astype(str).str.contains(program_desc)]
+    return_df = df.loc[df['program_desc'] == program_desc]
     return_df.index = range(0, len(return_df))
 
     if config.human:
